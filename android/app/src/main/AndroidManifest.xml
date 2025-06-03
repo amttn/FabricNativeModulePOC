@@ -10,6 +10,9 @@
       android:allowBackup="false"
       android:theme="@style/AppTheme"
       android:supportsRtl="true">
+
+      <meta-data android:name="BITMOVIN_PLAYER_LICENSE_KEY" android:value="f06675d0-8101-4343-a38e-ee2f7efbfad0" />
+
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"

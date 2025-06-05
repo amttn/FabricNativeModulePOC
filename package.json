@@ -39,6 +39,9 @@
   "codegenConfig": {
     "name": "RTNAstroPlayerViewSpec",
     "type": "components",
-    "jsSrcsDir": "specs"
+    "jsSrcsDir": "specs",
+    "android": {
+      "javaPackageName": "com.fabricnativemodulepoc"
+    }
   }
 }

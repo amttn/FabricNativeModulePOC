@@ -13,7 +13,7 @@ export interface RTNAstroPlayerViewProps extends ViewProps {
    */
   sourceType: 'Dash' | 'Hls' | 'Progressive';
   // You can add more props here, e.g.:
-  // autoplay?: boolean;
+  autoplay?: boolean;
   // muted?: boolean;
 }
 

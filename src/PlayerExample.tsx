@@ -1,15 +1,23 @@
-import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import RTNAstroPlayerView from '../nativeModules/RTNAstroPlayerView';
 
 export default function PlayerExample() {
+  const [isPlaying, setIsPlaying] = useState(false);
+
   return (
     <View style={styles.container}>
-      <RTNAstroPlayerView
-        url="https://cdn.bitmovin.com/content/assets/art-of-motion-dash-hls-progressive/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
-        sourceType="Dash"
-        style={styles.player}
-      />
+      <Pressable style={styles.button} onPress={() => setIsPlaying(true)}>
+        <Text>Play</Text>
+      </Pressable>
+      {isPlaying && (
+        <RTNAstroPlayerView
+          url="https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/hls/de3f6ca7-2db3-4689-8160-0f574a5996ad/playlist.m3u8"
+          sourceType="Hls"
+          autoplay={true}
+          style={styles.player}
+        />
+      )}
     </View>
   );
 }
@@ -17,9 +25,19 @@ export default function PlayerExample() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    overflow: 'hidden',
   },
   player: {
     flex: 1,
+  },
+  button: {
+    position: 'absolute',
+    width: 300,
+    height: 100,
+    borderWidth: 2,
+    borderColor: 'green',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -9,7 +9,7 @@ import com.facebook.react.uimanager.annotations.ReactProp
 
 
 @ReactModule(name = AstroPlayerViewManager.NAME)
-class AstroPlayerViewManager: SimpleViewManager<AstroPlayerView>() {
+class AstroPlayerViewManager(private val reactApplicationContext: ReactApplicationContext): SimpleViewManager<AstroPlayerView>() {
 
     companion object {
         const val NAME = "RTNAstroPlayerView"
@@ -38,11 +38,19 @@ class AstroPlayerViewManager: SimpleViewManager<AstroPlayerView>() {
 
     @ReactProp(name = "url")
     fun setUrl(view: AstroPlayerView, url: String?) {
+        println("setUrl: $url")
         url?.let { view.setUrl(it) }
     }
 
     @ReactProp(name = "sourceType")
     fun setSourceType(view: AstroPlayerView, sourceType: String?) {
+        println("setSourceType: $sourceType")
         sourceType?.let { view.setSourceType(it) }
+    }
+
+    @ReactProp(name = "autoplay")
+    fun setAutoplay(view: AstroPlayerView, autoplay: Boolean?) {
+        println("setSourceType: $autoplay")
+//        autoplay?.let { view.setAutoplay(it) }
     }
 }

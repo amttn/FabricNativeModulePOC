@@ -45,7 +45,7 @@ class AstroPlayerViewManager(private val reactApplicationContext: ReactApplicati
     @ReactProp(name = "sourceType")
     fun setSourceType(view: AstroPlayerView, sourceType: String?) {
         println("setSourceType: $sourceType")
-        sourceType?.let { view.setSourceType(it) }
+//        sourceType?.let { view.setSourceType(it) }
     }
 
     @ReactProp(name = "autoplay")

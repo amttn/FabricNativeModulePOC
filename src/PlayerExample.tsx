@@ -12,7 +12,7 @@ export default function PlayerExample() {
       </Pressable>
       {isPlaying && (
         <RTNAstroPlayerView
-          url="https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/hls/de3f6ca7-2db3-4689-8160-0f574a5996ad/playlist.m3u8"
+          url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
           sourceType="Hls"
           autoplay={true}
           style={styles.player}

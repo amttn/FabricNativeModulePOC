@@ -3,10 +3,10 @@ package com.fabricnativemodulepoc
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
-import com.bitmovin.player.PlayerView
-import com.bitmovin.player.api.Player
-import com.bitmovin.player.api.source.SourceConfig
-import com.bitmovin.player.api.source.SourceType
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
 
 class AstroPlayerView @JvmOverloads constructor(
     context: Context,
@@ -15,10 +15,9 @@ class AstroPlayerView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     private var playerView: PlayerView? = null
-    private var bitmovinPlayer: Player? = null
+    private var player: Player? = null
 
     private var currentUrl: String? = null
-    private var currentSourceType: SourceType? = null
 
     init {
         setupPlayerView()
@@ -32,7 +31,8 @@ class AstroPlayerView @JvmOverloads constructor(
             )
         }
         addView(playerView)
-        bitmovinPlayer = playerView?.player
+        player = ExoPlayer.Builder(context).build()
+        playerView?.player = player
     }
 
     fun setUrl(url: String) {
@@ -43,30 +43,12 @@ class AstroPlayerView @JvmOverloads constructor(
         }
     }
 
-    fun setSourceType(type: String) {
-        val newSourceType = when (type.lowercase()) {
-            "dash" -> SourceType.Dash
-            "hls" -> SourceType.Hls
-            "progressive" -> SourceType.Progressive
-            else -> {
-                // Log an error or handle unsupported types gracefully
-                System.err.println("BitmovinPlayer: Unsupported source type received: $type. Defaulting to Progressive.")
-                SourceType.Progressive // Fallback to a default type
-            }
-        }
-        if (currentSourceType != newSourceType) {
-            currentSourceType = newSourceType
-            // Attempt to load the source if both URL and source type are available
-            loadSourceIfReady()
-        }
-    }
-
     private fun loadSourceIfReady() {
-        if (currentUrl != null && currentSourceType != null) {
-            val sourceConfig = SourceConfig(currentUrl!!, currentSourceType!!)
-            val source = com.bitmovin.player.api.source.Source(sourceConfig)
-            bitmovinPlayer?.load(source)
-            println("AstroPlayerView: Loading source: $currentUrl with type $currentSourceType")
+        currentUrl?.let {
+            val mediaItem = MediaItem.fromUri(it)
+            player?.setMediaItem(mediaItem)
+            player?.prepare()
+            player?.play()
         }
     }
 
@@ -82,12 +64,12 @@ class AstroPlayerView @JvmOverloads constructor(
 
     fun onHostDestroy() {
         println("AstroPlayerView: onHostDestroy called")
-        playerView?.onDestroy()
-        bitmovinPlayer = null
+        player?.release()
         playerView = null
+        player = null
     }
 
     fun getPlayer(): Player? {
-        return bitmovinPlayer
+        return player
     }
 }
